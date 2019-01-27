@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Consulta de Editoras";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@section Scripts{
+
+    <script>
+
+        //criando o programa angular..
+        var appEditora = angular.module('appEditora', []);
+        //criando o controller..
+        appEditora.controller('consultaEditora',
+            function ($scope, $http) {
+
+                //criando uma função para executar a consulta no controller..
+                $scope.consultar = function () {
+
+                    //executando o método do controller..
+                    $http.get("/Editora/ConsultarEditora")
+                        .then(function (obj) {
+                            //armazenando em variavel..
+                            $scope.Editora = obj.data;
+                        })
+                        .catch(function (e) {
+                            $scope.mensagem = e.data;
+                        });
+                };
+            });
+
+
+    </script>
+
+}
+
+<h4>Consulta de Editoras</h4>
+<br />
+
+
+<div ng-app="appEditora" ng-controller="consultaEditora">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Pesquisar Editoras</label>
+                    <input type="text" class="form-control"
+                           ng-model="Pesquisa"
+                           placeholder="Digite aqui" />
+                </div>
+                <div class="col-md-4">
+                    <label>Ordenar por:</label>
+                    <select class="form-control" ng-model="Ordenacao">
+                        <option value="">Escolha uma Opção</option>
+                        <option value="IdEditora">Código</option>
+                        <option value="Nome">Nome do Editora</option>
+                    </select>
+                </div>
+
+            </div>
+            <br />
+            <table class="table table-bordered table-striped table-hover"
+                   ng-init="consultar()">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome de Editora</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr ng-repeat="p in Editora | filter : Pesquisa | orderBy : Ordenacao">
+                        <td>{{p.IdEditora}}</td>
+                        <td>{{p.Nome}}</td>
+                    </tr>
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            Quantidade de registros:
+                            {{(Editoras | filter : Pesquisa).length}}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+</div>

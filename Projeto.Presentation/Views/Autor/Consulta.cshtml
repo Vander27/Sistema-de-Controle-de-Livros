@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Consulta de Autores";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@section Scripts{
+    
+    <script>
+
+        //criando o programa angular..
+        var appAutor = angular.module('appAutor', []);
+        //criando o controller..
+        appAutor.controller('consultaAutor',
+            function ($scope, $http) {
+
+                //criando uma função para executar a consulta no controller..
+                $scope.consultar = function () {
+
+                    //executando o método do controller..
+                    $http.get("/Autor/ConsultarAutores")
+                        .then(function (obj) {
+                            //armazenando em variavel..
+                            $scope.autores = obj.data;
+                        })
+                        .catch(function (e) {
+                            $scope.mensagem = e.data;
+                        });
+                };
+            });
+
+
+    </script>
+    
+    }
+
+<h4>Consulta de Autores</h4>
+<br />
+
+
+<div ng-app="appAutor" ng-controller="consultaAutor">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Pesquisar Autores</label>
+                    <input type="text" class="form-control"
+                           ng-model="Pesquisa"
+                           placeholder="Digite aqui"/>
+                </div>
+                <div class="col-md-4">
+                    <label>Ordenar por:</label>
+                    <select class="form-control" ng-model="Ordenacao">
+                        <option value="">Escolha uma Opção</option>
+                        <option value="IdAutor">Código</option>
+                        <option value="Nome">Nome do Autor</option>
+                    </select>
+                </div>
+
+            </div>
+            <br />
+            <table class="table table-bordered table-striped table-hover"
+                   ng-init="consultar()">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome de Autor</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr ng-repeat="a in autores | filter : Pesquisa | orderBy : Ordenacao">
+                        <td>{{a.IdAutor}}</td>
+                        <td>{{a.Nome}}</td>
+                    </tr>
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            Quantidade de registros: 
+                            {{(autores | filter : Pesquisa).length}}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Cadastro de Livros";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<h4>Formulário de Cadastro de Livro</h4>
+<br />
+
+<div class="row">
+    <div class="col-md-4">
+
+        <label>Título do Livro:</label>
+        <input  type="text" class="form-control"
+               placeholder="Digite aqui" />
+        <br />
+
+        <label>Gênero:</label>
+        <input  type="text" class="form-control"
+               placeholder="Digite aqui" />
+        <br />
+
+        <label>Resumo:</label>
+        <textarea class="form-control"></textarea>
+        <br />
+
+    </div>
+    <div class="col-md-4">
+        
+        <label>Selecione o Autor:</label>
+        <select class="form-control">
+            <option value="">Escolha uma Opção</option>
+        </select>
+        <br />
+
+        <label>Selecione a Editora:</label>
+        <select class="form-control">
+            <option value="">Escolha uma Opção</option>
+        </select>
+        <br />
+
+        <label>Envie a Foto:</label>
+        <input type="file" class="form-control"/>
+        <br />
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <button class="btn btn-success">
+            Cadastrar Livro
+        </button>
+
+    </div>
+</div>
+
